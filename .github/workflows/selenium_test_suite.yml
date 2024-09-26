@@ -8,12 +8,18 @@ on:
   workflow_dispatch:
     inputs:
       run_type:
-        description: "Select the type of tests to run"
+        type: choice
+        description: "Select the tests to run"
         required: true
-        default: ""
+        default: "all"
+        options:
+          - all
+          - specific
 
       specific_tests:
-        description: "Comma-separated list of specific tests to run (if applicable)"
+        description: |
+          Comma-separated list of specific tests to run (if applicable)
+          i.e. test_stock_symbols_in_both_given_data_and_finance_page, test_stock_symbols_in_finance_page_not_in_given_data
         required: false # Make it optional
         default: "" # Set an empty default value if none is provided
 
@@ -43,9 +49,9 @@ jobs:
             else
               IFS=',' read -r -a test_array <<< "$tests"
               for test in "${test_array[@]}"; do
-                pytest -vvv "$test"
+                pytest -vvv -k "$test"
               done
             fi
           else
-            pytest
+            pytest -vvv
           fi
