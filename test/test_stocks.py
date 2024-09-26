@@ -20,7 +20,7 @@ def stock_names_input():
 
 class TestGoogleFinanceStocks:
     # this tests the symbols that in the google finance page and in the given data
-    def test_stock_symbols_in_given_data(self, stock_symbols, stock_names_input):
+    def test_stock_symbols_in_both_given_data_and_finance_page(self, stock_symbols, stock_names_input):
         # iterate over the retrieved stock symbols and put them in a list
         stock_symbol_set = set([stock_element.text for stock_element in stock_symbols])
 
@@ -30,7 +30,7 @@ class TestGoogleFinanceStocks:
         assert stock_inter == {"TSLA"}
 
     # this tests the symbols that are in the google finance page but not in given data
-    def test_stock_symbols_not_in_given_data(self, stock_symbols, stock_names_input):
+    def test_stock_symbols_in_finance_page_not_in_given_data(self, stock_symbols, stock_names_input):
         # iterate over the retrieved stock symbols and put them in a list
         stock_symbol_set = set([stock_element.text for stock_element in stock_symbols])
 
@@ -40,10 +40,19 @@ class TestGoogleFinanceStocks:
         assert stock_diff == {"BABA", "F", "DIS", "NXST", "AMZN"}
 
     # this tests the symbols that are in the given data but not in the google finance page
-    def test_stock_symbols_with_no_given_data(self, stock_symbols, stock_names_input):
+    def test_stock_symbols_in_given_data_not_in_finance_page(self, stock_symbols, stock_names_input):
         # iterate over the retrieved stock symbols and put them in a list
         stock_symbol_set = set([stock_element.text for stock_element in stock_symbols])
 
         stock_diff = stock_names_input.difference(stock_symbol_set)
         print(f"Stocks that are in the given test data but not in the google finance page: {stock_diff}")
         assert stock_diff == {"NFLX", "MSFT"}
+
+    # tests scenario where no given data is provided
+    def test_stock_symbols_with_no_given_data(self, stock_symbols):
+        # iterate over the retrieved stock symbols and put them in a list
+        stock_symbol_set = set([stock_element.text for stock_element in stock_symbols])
+
+        stock_diff = stock_symbol_set.difference(set())
+        print(f"Stocks that are in the google finance page, given no test data: {stock_diff}")
+        assert stock_diff == {"BABA", "F", "DIS", "NXST", "TSLA", "AMZN"}
