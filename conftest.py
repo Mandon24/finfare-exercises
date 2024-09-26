@@ -6,7 +6,7 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 # modify params to include different configurations
 # i.e. ["chrome-headless", "firefox-headless", "chrome", "firefox"]
-@pytest.fixture(scope="session", params=["chrome"])
+@pytest.fixture(scope="session", params=["chrome-headless"])
 def driver(request):
     """
     Pytest fixture to initialize WebDriver with different configurations.
