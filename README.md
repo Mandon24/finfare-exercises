@@ -29,3 +29,15 @@ Set up your local env with `python -m venv venv\finfare-exercises`
 
 ### Requirements
 Install project requirements locally with `pip install -r requirements-dev.txt`
+
+## GitHub Actions
+To run the gh action workflow manually follow the below steps:
+1. Visit https://github.com/Mandon24/finfare-exercises/actions/workflows/selenium_test_suite.yml
+2. Under `Run Workflow`, select `branch` to run the workflow for and whether you want to run `all`
+   or `specific` tests. 
+3. If running specific tests, make you to enter the test to run under the text field. If runnning multiple,
+   separate the name of the tests with a comma.
+
+Example: `test_stock_symbols_in_both_given_data_and_finance_page,test_stock_symbols_in_finance_page_not_in_given_data`
+
+**NOTE:** Make sure the name matches with the name given to the test. Please refer to the `test_google_finance_page.py` file.
