@@ -10,7 +10,7 @@ def finance_page(driver):
 @pytest.fixture
 def stock_symbols(finance_page):
     finance_page.open_url()
-    return finance_page.get_stock_symbols()
+    return finance_page.stock_symbols
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ class TestGoogleFinanceStocks:
     # this tests the symbols that in the google finance page and in the given data
     def test_stock_symbols_in_both_given_data_and_finance_page(self, stock_symbols, stock_names_input):
         # iterate over the retrieved stock symbols and put them in a list
-        stock_symbol_set = set([stock_element.text for stock_element in stock_symbols])
+        stock_symbol_set = set(stock_symbols)
 
         stock_inter = stock_symbol_set.intersection(set(stock_names_input))
         print(f"Stocks in both the google finance page and the given test data: {stock_inter}")
@@ -40,7 +40,7 @@ class TestGoogleFinanceStocks:
     # this tests the symbols that are in the google finance page but not in given data
     def test_stock_symbols_in_finance_page_not_in_given_data(self, stock_symbols, stock_names_input):
         # iterate over the retrieved stock symbols and put them in a list
-        stock_symbol_set = set([stock_element.text for stock_element in stock_symbols])
+        stock_symbol_set = set(stock_symbols)
 
         stock_diff = stock_symbol_set.difference(stock_names_input)
         print(f"Stocks in the google finance page that are not in the given test data: {stock_diff}")
@@ -50,7 +50,7 @@ class TestGoogleFinanceStocks:
     # this tests the symbols that are in the given data but not in the google finance page
     def test_stock_symbols_in_given_data_not_in_finance_page(self, stock_symbols, stock_names_input):
         # iterate over the retrieved stock symbols and put them in a list
-        stock_symbol_set = set([stock_element.text for stock_element in stock_symbols])
+        stock_symbol_set = set(stock_symbols)
 
         stock_diff = stock_names_input.difference(stock_symbol_set)
         print(f"Stocks that are in the given test data but not in the google finance page: {stock_diff}")
@@ -61,7 +61,7 @@ class TestGoogleFinanceStocks:
     # tests scenario where no given data is provided
     def test_stock_symbols_with_no_given_data(self, stock_symbols):
         # iterate over the retrieved stock symbols and put them in a list
-        stock_symbol_set = set([stock_element.text for stock_element in stock_symbols])
+        stock_symbol_set = set(stock_symbols)
 
         stock_diff = stock_symbol_set.difference(set())
         print(f"Stocks that are in the google finance page, given no test data: {stock_diff}")
